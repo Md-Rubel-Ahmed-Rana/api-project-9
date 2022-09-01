@@ -26,11 +26,12 @@ const displayDrinks = (drinks) => {
         const drinkDiv = document.createElement("div");
         drinkDiv.classList.add("col");
         drinkDiv.innerHTML = `
-        <div class="card">
+        <div class="card p-4">
             <img src="${drink.strDrinkThumb}" class="card-img-top" alt="...">
-            <div class="card-body">
+            <div class="card-body text-center">
                 <h5 class="card-title">${drink.strDrink}</h5>
-                    <p class="card-text"> ${drink.strInstructions.slice(0, 40)} </p>
+                <p class="card-text"> ${drink.strInstructions.slice(0, 30)}... </p>
+                <button onclick="loadDetails(${drink.idDrink})" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#drinkDetails">Show Details</button>
             </div>
         </div>
         `;
@@ -38,6 +39,32 @@ const displayDrinks = (drinks) => {
     })
 }
 
+// function to load Drink details by taking dynamic url;
+const loadDetails = async(id) => {
+    const url = await `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
+    const res = await fetch(url);
+    const data = await res.json();
+    showDrinkDetails(data.drinks[0]);
+}
+
+
+
+// show Drinks Details on the Modal;
+const showDrinkDetails = (drink) => {
+    console.log(drink);
+    const title = document.getElementById("drinkDetailTitle");
+    title.innerText = "Name: " + drink.strDrink;
+    const image = document.getElementById("drink-img");
+    image.src = drink.strDrinkThumb;
+    const category = document.getElementById("category")
+    category.innerText = "Category: " + drink.strCategory;
+    const date = document.getElementById("date");
+    date.innerText = "Modified at: " + drink.dateModified;
+    const alcohol = document.getElementById("alcohol");
+    alcohol.innerText = "Drink is " + drink.strAlcoholic;
+    const creative = document.getElementById("creative");
+    creative.innerText = "Is this creative? Ans: " + drink.strCreativeCommonsConfirmed;
+}
 
 // loader or spinner
 const loadingSpinner = (isLoading) => {
