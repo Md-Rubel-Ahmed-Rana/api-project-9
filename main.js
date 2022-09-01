@@ -16,7 +16,7 @@ const displayDrinks = (drinks) => {
    if(drinks === null){
        loadingSpinner(false)
        notFound.classList.remove("d-none");
-       notFound.innerHTML = `<h2 class="text-danger">Error 404. Item not found.</h2>`
+       notFound.innerHTML = `<h2 class="text-danger">Item not found. Error Code 404.</h2>`;
         return;
     }else{
        loadingSpinner(false)
@@ -26,12 +26,12 @@ const displayDrinks = (drinks) => {
         const drinkDiv = document.createElement("div");
         drinkDiv.classList.add("col");
         drinkDiv.innerHTML = `
-        <div class="card p-4">
-            <img src="${drink.strDrinkThumb}" class="card-img-top" alt="...">
+        <div class="card p-2">
+            <img src="${drink.strDrinkThumb}" class="w-50 m-auto card-img-top" alt="...">
             <div class="card-body text-center">
-                <h5 class="card-title">${drink.strDrink}</h5>
-                <p class="card-text"> ${drink.strInstructions.slice(0, 30)}... </p>
-                <button onclick="loadDetails(${drink.idDrink})" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#drinkDetails">Show Details</button>
+                <h5 class="card-title m-0">${drink.strDrink.slice(0, 21)}</h5>
+                <p class="card-text m-0"> ${drink.strInstructions.slice(0, 20)}... </p>
+                <button onclick="loadDetails(${drink.idDrink})" class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#drinkDetails">Show Details</button>
             </div>
         </div>
         `;
