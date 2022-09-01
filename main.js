@@ -10,7 +10,7 @@ const loadDrinks = async (searchText) => {
 // display the data to the UI
 const displayDrinks = (drinks) => {
     const drinkContainer = document.getElementById("drink-container");
-    drinkContainer.textContent = ""
+    drinkContainer.textContent = "";
     drinks.map(drink => {
         console.log(drink);
         const drinkDiv = document.createElement("div");
@@ -28,11 +28,22 @@ const displayDrinks = (drinks) => {
     })
 }
 
-// search functionality
-document.getElementById("search-btn").addEventListener("click", () => {
+
+// get search text as value 
+const searchValue = () => {
     const searchField = document.getElementById("search-field");
     const searchText = searchField.value;
     loadDrinks(searchText);
+}
+// search functionality
+document.getElementById("search-btn").addEventListener("click", () => {
+    searchValue();
 })
 
+// get the saerch result pressing Enter key instead of pressing search button
+document.getElementById("search-field").addEventListener("keyup", (getEvent) => {
+    if (getEvent.key === "Enter") {
+        searchValue();
+    }
+})
 loadDrinks("");
