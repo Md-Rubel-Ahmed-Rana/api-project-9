@@ -11,12 +11,15 @@ const loadDrinks = async (searchText) => {
 const displayDrinks = (drinks) => {
     const drinkContainer = document.getElementById("drink-container");
     drinkContainer.textContent = "";
+    // show not found message
     const notFound = document.getElementById("not-found");
    if(drinks === null){
+       loadingSpinner(false)
        notFound.classList.remove("d-none");
-       notFound.innerHTML = `<h2 class="text-danger">Eror 404. Item not found.</h2>`
+       notFound.innerHTML = `<h2 class="text-danger">Error 404. Item not found.</h2>`
         return;
     }else{
+       loadingSpinner(false)
        notFound.classList.add("d-none");
     }
     drinks.map(drink => {
@@ -36,6 +39,16 @@ const displayDrinks = (drinks) => {
 }
 
 
+// loader or spinner
+const loadingSpinner = (isLoading) => {
+    const loader = document.getElementById("loader");
+    if (isLoading) {
+        loader.classList.remove("d-none");
+    }else{
+        loader.classList.add("d-none");
+    }
+}
+
 // get search text as value 
 const searchValue = () => {
     const searchField = document.getElementById("search-field");
@@ -45,12 +58,14 @@ const searchValue = () => {
 // search functionality
 document.getElementById("search-btn").addEventListener("click", () => {
     searchValue();
+    loadingSpinner(true)
 })
 
 // get the saerch result pressing Enter key instead of pressing search button
 document.getElementById("search-field").addEventListener("keyup", (getEvent) => {
     if (getEvent.key === "Enter") {
         searchValue();
+        loadingSpinner(true);
     }
 })
 loadDrinks("");
