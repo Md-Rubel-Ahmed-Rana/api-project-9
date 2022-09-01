@@ -11,8 +11,15 @@ const loadDrinks = async (searchText) => {
 const displayDrinks = (drinks) => {
     const drinkContainer = document.getElementById("drink-container");
     drinkContainer.textContent = "";
+    const notFound = document.getElementById("not-found");
+   if(drinks === null){
+       notFound.classList.remove("d-none");
+       notFound.innerHTML = `<h2 class="text-danger">Eror 404. Item not found.</h2>`
+        return;
+    }else{
+       notFound.classList.add("d-none");
+    }
     drinks.map(drink => {
-        console.log(drink);
         const drinkDiv = document.createElement("div");
         drinkDiv.classList.add("col");
         drinkDiv.innerHTML = `
