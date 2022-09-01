@@ -1,7 +1,7 @@
 
 // loading data from api or server
-const loadDrinks = async() => {
-    const url = await `https://www.thecocktaildb.com/api/json/v1/1/search.php?s`;
+const loadDrinks = async (searchText) => {
+    const url = await `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${searchText}`;
     const res = await fetch(url);
     const data = await res.json();
     displayDrinks(data.drinks);
@@ -10,6 +10,7 @@ const loadDrinks = async() => {
 // display the data to the UI
 const displayDrinks = (drinks) => {
     const drinkContainer = document.getElementById("drink-container");
+    drinkContainer.textContent = ""
     drinks.map(drink => {
         console.log(drink);
         const drinkDiv = document.createElement("div");
@@ -27,4 +28,11 @@ const displayDrinks = (drinks) => {
     })
 }
 
-loadDrinks()
+// search functionality
+document.getElementById("search-btn").addEventListener("click", () => {
+    const searchField = document.getElementById("search-field");
+    const searchText = searchField.value;
+    loadDrinks(searchText);
+})
+
+loadDrinks("");
